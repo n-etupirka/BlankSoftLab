@@ -34,7 +34,7 @@ $PostInstallationActivity = Get-LabPostInstallationActivity `
         -DependencyFolder $PostInstallationFolder
 
 Add-LabMachineDefinition `
-        -Name "DC01" `
+        -Name "BLANK-DC01" `
         -DomainName $B_DomainName `
         -Roles RootDC `
         -OperatingSystem 'Windows Server 2019 Standard Evaluation (Desktop Experience)' `
@@ -46,14 +46,14 @@ $Password = $B_LocalAdminPassword | ConvertTo-SecureString -AsPlainText -Force
 $Creds = New-Object System.Management.Automation.PSCredential $B_LocalAdminUser, $Password
 
 Add-LabMachineDefinition `
-        -Name "WS01" `
+        -Name "BLANK-WS01" `
         -DomainName $B_DomainName `
         -OperatingSystem 'Windows 10 Enterprise Evaluation' `
         -Memory $ClientMemory `
         -InstallationUserCredential $Creds
 
 Add-LabMachineDefinition `
-        -Name "WS02" `
+        -Name "BLANK-WS02" `
         -DomainName $B_DomainName `
         -OperatingSystem 'Windows 10 Enterprise Evaluation' `
         -Memory $ClientMemory `
