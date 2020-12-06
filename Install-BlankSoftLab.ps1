@@ -16,6 +16,9 @@ $B_LocalAdminPassword = "Adm1n#123"
 # ----------------------------------------------------------
 # Lab Install
 # ----------------------------------------------------------
+$CurrentFolder = (Split-Path $myInvocation.MyCommand.path -Parent)
+$PostInstallationFolder = "$CurrentFolder\PostInstallationActivities"
+
 New-LabDefinition -Name $LabName -DefaultVirtualizationEngine HyperV
 
 # ----------------------------------------------------------
@@ -26,12 +29,17 @@ Set-LabInstallationCredential -Username $B_DomainAdminUser -Password $B_DomainAd
 Add-LabDomainDefinition -Name $B_DomainName -AdminUser $B_DomainAdminUser -AdminPassword $B_DomainAdminPassword
 
 # Domain Controller
+$PostInstallationActivity = Get-LabPostInstallationActivity `
+        -ScriptFileName PrepareDomain.ps1 `
+        -DependencyFolder $PostInstallationFolder
+
 Add-LabMachineDefinition `
         -Name "DC01" `
         -DomainName $B_DomainName `
         -Roles RootDC `
         -OperatingSystem 'Windows Server 2019 Standard Evaluation (Desktop Experience)' `
-        -Memory $ServerMemory
+        -Memory $ServerMemory `
+        -PostInstallationActivity $PostInstallationActivity
 
 # Workstation
 $Password = $B_LocalAdminPassword | ConvertTo-SecureString -AsPlainText -Force
