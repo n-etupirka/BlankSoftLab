@@ -52,6 +52,13 @@ Add-LabMachineDefinition `
         -Memory $ClientMemory `
         -InstallationUserCredential $Creds
 
+Add-LabMachineDefinition `
+        -Name "WS02" `
+        -DomainName $B_DomainName `
+        -OperatingSystem 'Windows 10 Enterprise Evaluation' `
+        -Memory $ClientMemory `
+        -InstallationUserCredential $Creds
+
 Install-Lab
 
 Show-LabDeploymentSummary -Detailed
