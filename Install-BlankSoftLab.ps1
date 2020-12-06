@@ -44,13 +44,17 @@ Add-LabMachineDefinition `
 # Workstation
 $Password = $B_LocalAdminPassword | ConvertTo-SecureString -AsPlainText -Force
 $Creds = New-Object System.Management.Automation.PSCredential $B_LocalAdminUser, $Password
+$PostInstallationActivity = Get-LabPostInstallationActivity `
+        -ScriptFileName Setup-BLANK-WS01.ps1 `
+        -DependencyFolder $PostInstallationFolder
 
 Add-LabMachineDefinition `
         -Name "BLANK-WS01" `
         -DomainName $B_DomainName `
         -OperatingSystem 'Windows 10 Enterprise Evaluation' `
         -Memory $ClientMemory `
-        -InstallationUserCredential $Creds
+        -InstallationUserCredential $Creds `
+        -PostInstallationActivity $PostInstallationActivity
 
 Add-LabMachineDefinition `
         -Name "BLANK-WS02" `
