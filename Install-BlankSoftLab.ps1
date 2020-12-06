@@ -30,7 +30,7 @@ Add-LabDomainDefinition -Name $B_DomainName -AdminUser $B_DomainAdminUser -Admin
 
 # Domain Controller
 $PostInstallationActivity = Get-LabPostInstallationActivity `
-        -ScriptFileName PrepareDomain.ps1 `
+        -ScriptFileName Setup-BLANK-DC01.ps1 `
         -DependencyFolder $PostInstallationFolder
 
 Add-LabMachineDefinition `
